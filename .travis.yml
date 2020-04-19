@@ -1,4 +1,5 @@
 language: ruby
+dist: bionic
 rvm:
   — 2.7.0
 before_script:
