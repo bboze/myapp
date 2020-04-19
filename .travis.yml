@@ -1,19 +1,15 @@
 language: ruby
 rvm:
   — 2.7.0
+before_script:
+  — psql -c 'create database myapp_test;' -U postgres
 cache: bundler
 services:
   — postgresql
 addons:
   postgresql: "9.4"
-jobs:
-  include:
-    - stage: Prepare Postgres
-      script: psql -c 'create database myapp_test;' -U postgres
-    - stage: install
-      script: bundle install
-    - stage: Test
-      script: skip
-      deploy:
-        provider: script
-        script: bash deploy.sh
+deploy:
+  provider: script
+  script: bash deploy.sh
+  on:
+    branch: master
