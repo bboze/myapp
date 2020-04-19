@@ -9,8 +9,3 @@ services:
   — postgresql
 addons:
   postgresql: "9.4"
-deploy:
-  provider: script
-  script: bash deploy.sh
-  on:
-    branch: master
