@@ -10,8 +10,8 @@ jobs:
   include:
     - stage: Prepare Postgres
       script: psql -c 'create database myapp_test;' -U postgres
-    - stage: Fix for webpacker
-      script: RAILS_ENV=test bundle exec rails webpacker:compile
+    - stage: install
+      script: bundle install
     - stage: Test
       script: skip
       deploy:
