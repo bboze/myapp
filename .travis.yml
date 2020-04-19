@@ -1,16 +1,19 @@
 language: ruby
 rvm:
   — 2.7.0
-before_script:
-  — psql -c 'create database myapp_test;' -U postgres
-  — RAILS_ENV=test bundle exec rails webpacker:compile
 cache: bundler
 services:
   — postgresql
 addons:
   postgresql: "9.4"
-deploy:
-  provider: script
-  script: bash deploy.sh
-  on:
-    branch: master
+jobs:
+  include:
+    - stage: Prepare Postgres
+      script: psql -c 'create database myapp_test;' -U postgres
+    - stage: Fix for webpacker
+      script: RAILS_ENV=test bundle exec rails webpacker:compile
+    - stage: Test
+      script: skip
+      deploy:
+        provider: script
+        script: bash deploy.sh
